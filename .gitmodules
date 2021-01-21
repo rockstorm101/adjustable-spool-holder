@@ -1,0 +1,4 @@
+[submodule "lib/MCAD"]
+	path = lib/MCAD
+	url = https://github.com/rockstorm101/MCAD
+	branch = more-dev
