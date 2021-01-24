@@ -2,3 +2,4 @@ venv
 build
 *.scad
 *.stl
+__pycache__
