@@ -11,23 +11,20 @@ import v2901 as bearing
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 
+def press_clamp_onto_bearing():
+    return tmp
+
 def part(variant = 'A', configuration = 'default', debug = False):
-    S = sp.color("Khaki", 1)(screw.part(debug))
-    B = bearing.part(debug)
     C = sp.color("SeaGreen", 1)( clamp.part(debug) )
+    B = bearing.part()
     N = sp.color("Plum", 1)( nut.part(debug) )
+    S = sp.color("Khaki", 1)(screw.part(debug))
 
-    tmp = S
+    BC = B + assembly.attach(bearing.RACEO_CONN, clamp.BEARING_CONN)(C)
+    NBC = N + assembly.attach(nut.BEARING_CONN, bearing.RACEI_CONN)(BC)
 
-    tmp2 = B
-    tmp2 += assembly.attach(bearing.RACEO_CONN, clamp.BEARING_CONN)(C)
-
-    tmp += assembly.attach(screw.BEARING_CONN, bearing.RACEI_CONN)(tmp2)
-
-    tmp3 = N
-    tmp3 += assembly.attach(nut.BEARING_CONN, bearing.RACEI_CONN)(tmp2)
-
-    tmp += assembly.attach(screw.NUT_CONN, nut.THREAD_CONN)(tmp3)
+    tmp = S + assembly.attach(screw.BEARING_CONN, bearing.RACEI_CONN)(BC)
+    tmp    += assembly.attach(screw.NUT_CONN, nut.THREAD_CONN)(NBC)
 
     tmp = sp.rotate([0,90,0])(tmp)
     if debug:
@@ -37,6 +34,9 @@ def part(variant = 'A', configuration = 'default', debug = False):
     return tmp
 
 if __name__ == '__main__':
-    sp.scad_render_to_file(part(), include_orig_code = False)
+    tmp = part()
+    sp.scad_render_to_file(tmp, include_orig_code = False)
     # One line per variant to generate all .scad files
     # sp.scad_render_to_file(part(variant = B), include_orig_code = False)
+    bom = spu.bill_of_materials(tmp, csv=True)
+    print(bom)
