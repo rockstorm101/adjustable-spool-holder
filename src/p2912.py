@@ -10,6 +10,7 @@ import p2910 as screw
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 threads = sp.import_scad('../lib/MCAD/fasteners/threads.scad')
 metric_fasteners = sp.import_scad('../lib/MCAD/fasteners/metric_fastners.scad')
+regular_shapes = sp.import_scad('../lib/MCAD/shapes/2Dshapes.scad')
 
 # Config
 T_d = screw.T_d  # thread nominal diameter
@@ -19,16 +20,24 @@ F_d = screw.F_d  # flange diam
 F_t = 2          # flange thickness
 B_d = screw.B_d  # bearing seat diameter
 B_h = screw.B_h  # bearing seat depth
-dim14 = F_t + B_h  # full length
+N_af = 30        # nut across-flats dimension
+N_h = 10         # nut height
+PN_s = 5         # part number character height
+PN_d = 0.3       # part number engraving depth
+dim14 = F_t + B_h + N_h  # full length
 
 # Connectors
 THREAD_CONN = [[0, 0, 0], [0, 0, 1], 0]
-BEARING_CONN = [[0, 0, F_t], [0, 0, 1], 0]
+BEARING_CONN = [[0, 0, F_t+N_h], [0, 0, 1], 0]
 
 @spu.bom_part(description = "Nut")
-def part(variant = 'A', configuration = 'default', debug = False):
-    tmp = sp.cylinder(d=F_d, h=F_t)
-    tmp += sp.translate([0,0,F_t-0.1])(sp.cylinder(d=B_d, h=B_h+0.1))
+def part(ver = "01", variant = 'A', configuration = 'default', debug = False):
+    nut = regular_shapes.hexagon(0,0,across_flats = N_af)
+    tmp = sp.linear_extrude(N_h)(nut)
+    flange = sp.cylinder(d=F_d, h=F_t+0.1)
+    tmp += sp.translate([0,0,N_h-0.1])(flange)
+    bseat = sp.cylinder(d=B_d, h=B_h+0.1)
+    tmp += sp.translate([0, 0, N_h+F_t-0.1])(bseat)
     thread = threads.metric_thread(diameter = T_d,
                                    pitch = T_p,
                                    length = dim14+0.2,
@@ -38,12 +47,24 @@ def part(variant = 'A', configuration = 'default', debug = False):
     thread = threads.chamfered_thread(dim14+0.2, internal = True)(
         thread, chamfer, chamfer)
     tmp -= sp.translate([0,0,-0.1])(thread)
+    pn1 = sp.text(text="2912", size = 5, halign = "center")
+    pn2 = sp.text(text = ver + variant, size = 5, halign = "center")
+    tmp -= locate_part_number(pn1)
+    tmp -= sp.rotate([0,0,60])(locate_part_number(pn2))
     # tmp -= chamfer_cylinder_internal(T_d+0.25)
     # tmp -= sp.translate([0,0,dim14])(
     #     sp.rotate([180,0,0])(
     #         chamfer_cylinder_internal(T_d+0.25) ) )
     if debug: tmp += assembly.connector(BEARING_CONN)
+    if debug: tmp += assembly.connector(THREAD_CONN)
     return tmp
+
+def locate_part_number(part_number):
+    pn = part_number
+    pn = sp.linear_extrude(PN_d+0.001)(pn)
+    pn = sp.rotate([90,0,0])(pn)
+    pn = sp.translate([0,-N_af/2+PN_d-0.001,(N_h-PN_s)/2])(pn)
+    return pn
 
 def chamfer_cylinder_internal(diameter = 10, angle = 45):
     d = diameter/2
