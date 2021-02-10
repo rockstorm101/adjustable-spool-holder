@@ -15,10 +15,10 @@ def press_clamp_onto_bearing():
     return tmp
 
 def part(variant = 'A', configuration = 'default', debug = False):
-    C = sp.color("SeaGreen", 1)( clamp.part(debug) )
-    B = bearing.part()
-    N = sp.color("Plum", 1)( nut.part(debug) )
-    S = sp.color("Khaki", 1)(screw.part(debug))
+    C = sp.color("SeaGreen", 1)( clamp.part(debug=debug) )
+    B = bearing.part(debug=debug)
+    N = sp.color("Plum", 1)( nut.part(debug=debug) )
+    S = sp.color("Khaki", 1)(screw.part(debug=debug))
 
     BC = B + assembly.attach(bearing.RACEO_CONN, clamp.BEARING_CONN)(C)
     NBC = N + assembly.attach(nut.BEARING_CONN, bearing.RACEI_CONN)(BC)
