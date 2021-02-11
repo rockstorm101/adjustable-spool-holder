@@ -18,7 +18,7 @@ RACEO_CONN = [[0, 0, B], [0, 0, -1], 0]
 def part(variant = 'A', configuration = 'default', debug = False):
     tmp = sp.cylinder(d=OD, h=B)
     tmp -= sp.translate([0,0,-0.1])(sp.cylinder(d=ID, h=B+0.2))
-    if debug: tmp += assembly.connector(DEFAULT_CONN)
+    if debug: tmp += assembly.connector(RACEI_CONN)
     return tmp
 
 if __name__ == '__main__':
