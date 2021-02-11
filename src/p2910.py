@@ -17,7 +17,7 @@ B_d = bearing.ID - 0.2  # bearing seat diam
 dim14 = 90              # full length
 T_d = 20                # thread nom diam
 T_p = 2.5               # thread pitch
-T_c = 0.4               # thread clearance
+T_c = 0.3               # thread clearance
 dim17 = dim14 - dim10 - B_h  # thread length
 
 
