@@ -10,20 +10,20 @@ assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 threads = sp.import_scad('../lib/MCAD/fasteners/threads.scad')
 
 # Config
-dim10 = 15    # first step height
-B_h = bearing.B + 0.4   # bearing seat height
-F_d = 29.5  # flange OD, which the bearing seats against
+dim10 = 14              # first step height
+B_h = bearing.B + 1.4   # bearing seat height
+F_d = 29.5              # flange OD, which the bearing seats against
 B_d = bearing.ID - 0.2  # bearing seat diam
-dim14 = 90    # full length. TODO: bring back to 90
-T_d = 20      # thread nom diam
-T_p = 2.5     # thread pitch
-T_c = 0.4     # thread clearance
+dim14 = 90              # full length
+T_d = 20                # thread nom diam
+T_p = 2.5               # thread pitch
+T_c = 0.4               # thread clearance
 dim17 = dim14 - dim10 - B_h  # thread length
 
 
 # Connectors
 BEARING_CONN = [[0, 0, dim10], [0, 0, 1], 0]
-NUT_CONN =     [[0, 0, dim14-dim17/2+0.9], [0, 0, -1], 0]
+NUT_CONN =     [[0, 0, dim14-20.2], [0, 0, -1], 0]
 
 @spu.bom_part(description = "Screw")
 def part(variant = 'A', configuration = 'default', debug = False):
@@ -47,7 +47,7 @@ def part(variant = 'A', configuration = 'default', debug = False):
             sp.import_(
                 "../aux/Ender_3_spool_holder/files/" +
                 "Ender3_Spool_Holder_Coupling.stl") ) )
-    if debug: tmp += assembly.connector(DEFAULT_CONN)
+    if debug: tmp += assembly.connector(BEARING_CONN)
     return tmp
 
 def chamfer_cylinder_external(length = 1, angle = 45, diameter = 10):
