@@ -11,9 +11,6 @@ import v2901 as bearing
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 
-def press_clamp_onto_bearing():
-    return tmp
-
 def part(variant = 'A', configuration = 'default', debug = False):
     C = sp.color("SeaGreen", 1)( clamp.part(debug=debug) )
     B = bearing.part(debug=debug)
