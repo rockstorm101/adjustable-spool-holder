@@ -1,4 +1,5 @@
 # Python imports
+import argparse
 import math
 import solid as sp
 import solid.utils as spu
@@ -18,11 +19,12 @@ dim15 = 2     # flange height
 dim16 = dim13 - dim15   # bearing seat depth
 
 # Connectors
-DEFAULT_CONN = [[0, 0, 0], [0, 0, -1], 0]
+SPOOL_CONN = [[0, 0, dim16-bearing.B/2], [0, 0, 1], 0]
 BEARING_CONN = [[0, 0, dim16], [0, 0, -1], 0]
 
+
 @spu.bom_part(description = "Clamp")
-def part(variant = 'A', configuration = 'default', debug = False):
+def part(version = '', variant = '', configuration = '', debug = False):
     out_cyl = sp.cylinder(h=dim15+0.001, d=dim10)
     cone = sp.cylinder(h=dim16, d1=dim10, d2=dim11)
     cone = sp.translate([0,0,dim15])(cone)
@@ -37,11 +39,20 @@ def part(variant = 'A', configuration = 'default', debug = False):
                                        angle = 30,
                                        internal = True)
     tmp -= chamfer
-    if debug: tmp += assembly.connector(DEFAULT_CONN)
+    if debug: tmp += assembly.connector(SPOOL_CONN)
     if debug: tmp += assembly.connector(BEARING_CONN)
     return tmp
 
 if __name__ == '__main__':
-    sp.scad_render_to_file(part(), include_orig_code = False)
-    # One line per variant to generate all .scad files
-    # sp.scad_render_to_file(part(variant = B), include_orig_code = False)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true',
+                        help = "include debug code on SCAD render")
+    parser.add_argument('-e', '--version', default='',
+                        help = "add 'VERSION' to P/N")
+    args = parser.parse_args()
+
+    for variant in ['']:
+        filename = parser.prog.replace(".py","")+args.version+variant
+        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        sp.scad_render_to_file(tmp, filepath=filename+".scad",
+                               include_orig_code = False)
