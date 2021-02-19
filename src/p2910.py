@@ -9,6 +9,7 @@ import v2901 as bearing
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 threads = sp.import_scad('../lib/MCAD/fasteners/threads.scad')
+chamfers = sp.import_scad('../lib/MCAD/fillets/chamfers.scad')
 
 # Config
 dim10 = 14              # first step height
@@ -31,13 +32,14 @@ NUT_CONN =     [[0, 0, dim14-20.2], [0, 0, -1], 0]
 def part(variant = '', configuration = '', debug = False):
     tmp = sp.cylinder(d=F_d, h=dim10)
     tmp += sp.translate([0,0,dim10-0.1])(sp.cylinder(d=B_d, h=B_h+0.1))
-    thread = threads.chamfered_thread(dim17, internal = False)(
+    thread = chamfers.mcad_chamfered_cylinder(dim17, internal = False)(
         threads.metric_thread(diameter = T_d,
                               pitch = T_p,
                               length = dim17,
                               internal = False,
                               clearance = T_c ),
-        threads.chamfer_cylinder(T_d, T_d - 2*T_p - 0.5, internal = False)
+        chamfers.mcad_chamfer_cylinder(T_d, T_p+0.25, depth=None,
+                                       internal = False)
     )
     tmp += sp.translate([0,0,dim17+B_h+dim10])( sp.rotate([180,0,0])(thread) )
     tmp += sp.rotate([180,0,0])(
