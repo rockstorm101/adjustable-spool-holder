@@ -26,15 +26,16 @@ N_h = 10         # nut height
 PN_s = 3         # part number character height
 PN_d = 0.3       # part number engraving depth
 dim14 = F_t + B_h + N_h  # full length
-_part_number = ''
+_code_name = "2912"
+_version = ''
 
 # Connectors
 THREAD_CONN = [[0, 0, 0], [0, 0, 1], 0]
 BEARING_CONN = [[0, 0, F_t+N_h], [0, 0, 1], 0]
 
-@spu.bom_part(description = "Nut")
-def part(version = '', variant = '', configuration = '', debug = False):
-    nut = regular_shapes.hexagon(0,0,across_flats = N_af)
+@spu.bom_part(description = "Nut", code_name = _code_name)
+def part(variant = '', configuration = '', debug = False):
+    nut = regular_shapes.hexagon(None,None,across_flats = N_af)
     tmp = sp.linear_extrude(N_h)(nut)
     flange = sp.cylinder(d=F_d, h=F_t+0.1)
     tmp += sp.translate([0,0,N_h-0.1])(flange)
@@ -49,7 +50,7 @@ def part(version = '', variant = '', configuration = '', debug = False):
     thread = threads.chamfered_thread(dim14+0.2, internal = True)(
         thread, chamfer, chamfer)
     tmp -= sp.translate([0,0,-0.1])(thread)
-    tmp -= locate_part_number(_part_number+version+variant)
+    tmp -= locate_part_number(_code_name+_version+variant)
     # tmp -= sp.rotate([0,0,60])(locate_part_number(version+variant))
     if debug: tmp += assembly.connector(BEARING_CONN)
     if debug: tmp += assembly.connector(THREAD_CONN)
@@ -72,10 +73,10 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--version', default='',
                         help = "add 'VERSION' to P/N")
     args = parser.parse_args()
+    _version = args.version
 
-    _part_number = parser.prog[1:].replace(".py","")
     for variant in ['']:
-        filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        filename = parser.prog.replace(".py","")+_version+variant
+        tmp = part(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)

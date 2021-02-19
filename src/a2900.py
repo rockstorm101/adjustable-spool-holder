@@ -3,6 +3,8 @@ import argparse
 import solid as sp
 import solid.utils as spu
 
+spu.set_bom_headers("code_name")
+
 # Import parts to be assembled
 import p2910 as screw
 import p2911 as clamp
@@ -13,7 +15,7 @@ import m2901 as spool
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 
-def assy(version = '', variant = '', configuration = '', debug = False):
+def assy(variant = '', configuration = '', debug = False):
     C = sp.color("SeaGreen", 1)( clamp.part(debug=debug) )
     B = bearing.part(debug=debug)
     N = sp.color("Plum", 1)( nut.part(debug=debug) )
@@ -28,10 +30,11 @@ def assy(version = '', variant = '', configuration = '', debug = False):
     tmp = S + assembly.attach(screw.BEARING_CONN, bearing.RACEI_CONN)(tmp)
 
     tmp = sp.rotate([0,90,0])(tmp)
-    # if debug:
-    #     tmp -= sp.translate([50-0.1,-50,0])(
-    #         sp.color("White",0.1)( sp.cube([100,100,100], center = True) )
-    #     )
+
+    if debug:
+        tmp *= sp.translate([0,1000,0])(
+            sp.cube([2000,2000,2000], center = True)
+        )
     return tmp
 
 if __name__ == '__main__':
@@ -44,7 +47,7 @@ if __name__ == '__main__':
 
     for variant in ['']:
         filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = assy(variant=variant, version=args.version, debug=args.debug)
+        tmp = assy(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)
         bom = spu.bill_of_materials(tmp, csv=True)

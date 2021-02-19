@@ -19,7 +19,7 @@ dim13 = 200 # OD
 FWD_CLAMP_CONN = [[0, 0, dim12/2], [0, 0, -1], 0]
 AFT_CLAMP_CONN = [[0, 0, -dim12/2], [0, 0, 1], 0]
 
-def part(version = '', variant = '', configuration = '', debug = False):
+def part(variant = '', configuration = '', debug = False):
     tmp = sp.cylinder(d=dim11+2*dim10, h=dim12-0.2, center=True)
     ear = sp.cylinder(d=dim13, h=dim10)
     for z in [dim12/2-dim10, -dim12/2]:
@@ -39,6 +39,6 @@ if __name__ == '__main__':
 
     for variant in ['']:
         filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        tmp = part(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)

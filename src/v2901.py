@@ -15,8 +15,8 @@ B =   9
 RACEI_CONN = [[0, 0, 0], [0, 0,  1], 0]
 RACEO_CONN = [[0, 0, B], [0, 0, -1], 0]
 
-@spu.bom_part(description = "Bearing 6905-ZZ")
-def part(version = '', variant = '', configuration = '', debug = False):
+@spu.bom_part(description = "Bearing", code_name = "6905-ZZ")
+def part(variant = '', configuration = '', debug = False):
     tmp = sp.cylinder(d=OD, h=B)
     tmp -= sp.translate([0,0,-0.1])(sp.cylinder(d=ID, h=B+0.2))
     if debug: tmp += assembly.connector(RACEI_CONN)
@@ -33,6 +33,6 @@ if __name__ == '__main__':
 
     for variant in ['']:
         filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        tmp = part(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)

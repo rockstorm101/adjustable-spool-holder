@@ -23,8 +23,8 @@ SPOOL_CONN = [[0, 0, dim16-bearing.B/2], [0, 0, 1], 0]
 BEARING_CONN = [[0, 0, dim16], [0, 0, -1], 0]
 
 
-@spu.bom_part(description = "Clamp")
-def part(version = '', variant = '', configuration = '', debug = False):
+@spu.bom_part(description = "Clamp", code_name = "2911")
+def part(variant = '', configuration = '', debug = False):
     out_cyl = sp.cylinder(h=dim15+0.001, d=dim10)
     cone = sp.cylinder(h=dim16, d1=dim10, d2=dim11)
     cone = sp.translate([0,0,dim15])(cone)
@@ -53,6 +53,6 @@ if __name__ == '__main__':
 
     for variant in ['']:
         filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        tmp = part(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)

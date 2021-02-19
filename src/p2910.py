@@ -20,17 +20,17 @@ T_d = 20                # thread nom diam
 T_p = 2.5               # thread pitch
 T_c = 0.3               # thread clearance
 dim17 = dim14 - dim10 - B_h  # thread length
+_version = ''
 
 
 # Connectors
 BEARING_CONN = [[0, 0, dim10], [0, 0, 1], 0]
 NUT_CONN =     [[0, 0, dim14-20.2], [0, 0, -1], 0]
 
-@spu.bom_part(description = "Screw")
-def part(version = '', variant = '', configuration = '', debug = False):
+@spu.bom_part(description = "Screw", code_name = "2910")
+def part(variant = '', configuration = '', debug = False):
     tmp = sp.cylinder(d=F_d, h=dim10)
     tmp += sp.translate([0,0,dim10-0.1])(sp.cylinder(d=B_d, h=B_h+0.1))
-    #tmp += sp.translate([0,0,+0.1])(sp.cylinder(d=T_p, h=dim14-0.1))
     thread = threads.chamfered_thread(dim17, internal = False)(
         threads.metric_thread(diameter = T_d,
                               pitch = T_p,
@@ -40,9 +40,6 @@ def part(version = '', variant = '', configuration = '', debug = False):
         threads.chamfer_cylinder(T_d, T_d - 2*T_p - 0.5, internal = False)
     )
     tmp += sp.translate([0,0,dim17+B_h+dim10])( sp.rotate([180,0,0])(thread) )
-    # tmp -= sp.translate([0,0,dim14])(
-    #     sp.rotate([180,0,0])(
-    #         chamfer_cylinder_external(2, 45, diameter = 20) ))
     tmp += sp.rotate([180,0,0])(
         sp.translate([-107,-113,-0.2])(
             sp.import_(
@@ -58,9 +55,10 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--version', default='',
                         help = "add 'VERSION' to P/N")
     args = parser.parse_args()
+    _version = args.version
 
     for variant in ['']:
-        filename = parser.prog.replace(".py","")+args.version+variant
-        tmp = part(variant=variant, version=args.version, debug=args.debug)
+        filename = parser.prog.replace(".py","")+_version+variant
+        tmp = part(variant=variant, debug=args.debug)
         sp.scad_render_to_file(tmp, filepath=filename+".scad",
                                include_orig_code = False)
