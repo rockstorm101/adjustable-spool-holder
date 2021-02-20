@@ -19,18 +19,21 @@
 
 ## 0.1-p8
 
+Screw broke due to excessive torque tightening.
+
 ### Added
 
-- m02: Added male thread prototype
+- Added male thread prototype (m02)
+- Assembly documentation (images)
 - p10: Extended Screw by 20 mm
 - Added argument parsing to all sources
-- m01: Added a filament spool mockup
+- Added a filament spool mockup (m01)
 - p12: Changed size and font of scribed P/N
 
 ### Fixed
 
 - 2910: Fixed Screw not using thread clearance parameter
-- Removed unsued functions (which are now ported to MCAD)
+- Removed unused functions (which are now ported to MCAD)
 
 
 ## 0.1
