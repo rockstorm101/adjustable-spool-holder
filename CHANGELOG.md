@@ -2,17 +2,28 @@
 
 ## Unreleased
 
+## 0.1-p9
+
+### Fixed
+
+- p10: Thread clearance increased to 0.4 mm
+
+
+## 0.1-p8
+
 ### Added
 
-- 2910: Extended Screw by 20 mm
-- Added argument parsing and a 'version' parameter to all sources
-- Added a filament spool mockup (m2901)
-- 2912: Changed size and font of scribed P/N
+- m02: Added male thread prototype
+- p10: Extended Screw by 20 mm
+- Added argument parsing to all sources
+- m01: Added a filament spool mockup
+- p12: Changed size and font of scribed P/N
 
 ### Fixed
 
 - 2910: Fixed Screw not using thread clearance parameter
 - Removed unsued functions (which are now ported to MCAD)
+
 
 ## 0.1
 
