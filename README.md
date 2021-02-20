@@ -6,10 +6,10 @@ cases.
 
 ## Bill of Materials
 
-P/N     | Description | Quantity 
+P/N     | Description | Quantity
 -------:|:----------- |:--------:
-290101  | Screw       | 1		
-291101  | Clamp       | 2		
+291001  | Screw       | 1
+291101  | Clamp       | 2
 291201  | Nut         | 1
 6905-ZZ | Bearing     | 2
 
@@ -62,11 +62,11 @@ openscad -o <stl_file>.stl <source_file>.scad
 - [SolidPython][6]: a python front-end for solid modelling to OpenSCAD
 - [OpenSCAD][7]: a solid 3D CAD modeller
 - [Custom MCAD][8]: customised version of the MCAD library ('more-dev' branch)
-- The [Open Sans][9] font (especially the "Bold" style)
+- The [Open Sans][9] font (paticularly the "Bold" style)
 
 [6]: https://github.com/SolidCode/SolidPython
 [7]: http://www.openscad.org
-[8]: https://github.com/rockstorm101/MCAD/tree/more-dev 
+[8]: https://github.com/rockstorm101/MCAD/tree/more-dev
 [9]: https://www.1001freefonts.com/open-sans.font
 
 ## Assembly
