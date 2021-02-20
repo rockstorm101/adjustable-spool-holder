@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.2-p1
+
+### Fixed
+
+- p10: Thread clearance increased to 0.6 mm
+- Versioning corrected
+
+
 ## 0.1-p9
 
 ### Fixed
