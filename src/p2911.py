@@ -8,7 +8,7 @@ import v2901 as bearing
 
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
-threads = sp.import_scad('../lib/MCAD/fasteners/threads.scad')
+chamfers = sp.import_scad('../lib/MCAD/fillets/chamfers.scad')
 
 # Config
 dim10 = 80    # OD
@@ -34,10 +34,11 @@ def part(variant = '', configuration = '', debug = False):
     flange = sp.cylinder(d=dim14, h=dim15+0.2)
     flange = sp.translate([0,0,dim16-0.1])(flange)
     tmp -= flange
-    chamfer = threads.chamfer_cylinder(cyl_diameter = dim11,
-                                       chfr_diameter = dim11 + 2*1.5,
-                                       angle = 30,
-                                       internal = True)
+    chamfer = chamfers.mcad_chamfer_cylinder(diameter = dim11,
+                                             length = 1.5,
+                                             angle = 30,
+                                             depth = None,
+                                             internal = True)
     tmp -= chamfer
     if debug: tmp += assembly.connector(SPOOL_CONN)
     if debug: tmp += assembly.connector(BEARING_CONN)

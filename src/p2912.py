@@ -10,7 +10,7 @@ import p2910 as screw
 # SCAD imports
 assembly = sp.import_scad('../lib/MCAD/assembly/attach.scad')
 threads = sp.import_scad('../lib/MCAD/fasteners/threads.scad')
-metric_fasteners = sp.import_scad('../lib/MCAD/fasteners/metric_fastners.scad')
+chamfers = sp.import_scad('../lib/MCAD/fillets/chamfers.scad')
 regular_shapes = sp.import_scad('../lib/MCAD/shapes/2Dshapes.scad')
 
 # Config
@@ -46,8 +46,12 @@ def part(variant = '', configuration = '', debug = False):
                                    length = dim14+0.2,
                                    internal = True,
                                    clearance = T_c)
-    chamfer = threads.chamfer_cylinder(T_d-2*T_p, T_d+0.5, internal = True)
-    thread = threads.chamfered_thread(dim14+0.2, internal = True)(
+    chamfer = chamfers.mcad_chamfer_cylinder(diameter = T_d-2*T_p,
+                                             length = T_p+0.25,
+                                             angle = None,
+                                             depth = None,
+                                             internal = True)
+    thread = chamfers.mcad_chamfered_cylinder(dim14+0.2, internal = True)(
         thread, chamfer, chamfer)
     tmp -= sp.translate([0,0,-0.1])(thread)
     tmp -= locate_part_number(_code_name+_version+variant)

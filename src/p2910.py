@@ -38,7 +38,7 @@ def part(variant = '', configuration = '', debug = False):
                               length = dim17,
                               internal = False,
                               clearance = T_c ),
-        chamfers.mcad_chamfer_cylinder(T_d, T_p+0.25, depth=None,
+        chamfers.mcad_chamfer_cylinder(T_d, T_p+0.25, angle = None, depth=None,
                                        internal = False)
     )
     tmp += sp.translate([0,0,dim17+B_h+dim10])( sp.rotate([180,0,0])(thread) )
