@@ -1,5 +1,5 @@
 venv
 build
 *.scad
-*.stl
+src/*.stl
 __pycache__
