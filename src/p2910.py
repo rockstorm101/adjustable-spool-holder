@@ -57,7 +57,7 @@ def part(variant = '', configuration = '', debug = False):
                                         size = PN_s,
                                         font = "Open Sans:style=Bold",
                                         halign = "center",
-                                        valign = "bot",
+                                        valign = "bottom",
                                         spacing = 1,
                                         direction = "ccw")
     tmp -= sp.translate([0,0,dim10/2-PN_s/2])( pn )
