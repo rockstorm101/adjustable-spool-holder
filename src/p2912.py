@@ -35,24 +35,11 @@ BEARING_CONN = [[0, 0, F_t+N_h], [0, 0, 1], 0]
 
 @spu.bom_part(description = "Nut", code_name = _code_name)
 def part(variant = '', configuration = '', debug = False):
-    nut = regular_shapes.hexagon(None,None,across_flats = N_af)
-    tmp = sp.linear_extrude(N_h)(nut)
+    tmp = hexagon()
     flange = sp.cylinder(d=F_d, h=F_t+0.1)
     tmp += sp.translate([0,0,N_h-0.1])(flange)
     tmp += sp.translate([0, 0, N_h+F_t-0.001])(screw.bseat())
-    thread = threads.metric_thread(diameter = T_d,
-                                   pitch = T_p,
-                                   length = dim14+0.2,
-                                   internal = True,
-                                   clearance = T_c)
-    chamfer = chamfers.mcad_chamfer_cylinder(diameter = T_d-2*T_p,
-                                             length = T_p+0.25,
-                                             angle = None,
-                                             depth = None,
-                                             internal = True)
-    thread = chamfers.mcad_chamfered_cylinder(dim14+0.2, internal = True)(
-        thread, chamfer, chamfer)
-    tmp -= sp.translate([0,0,-0.1])(thread)
+    tmp -= thread(dim14)
     tmp -= locate_part_number(_code_name+_version+variant)
     # tmp -= sp.rotate([0,0,60])(locate_part_number(version+variant))
     if debug: tmp += assembly.connector(BEARING_CONN)
@@ -68,6 +55,28 @@ def locate_part_number(text):
     pn = sp.rotate([90,0,0])(pn)
     pn = sp.translate([0,-N_af/2+PN_d-0.001,(N_h-PN_s)/2])(pn)
     return pn
+
+def hexagon():
+    tmp = regular_shapes.hexagon(None,None,across_flats = N_af)
+    tmp = sp.linear_extrude(N_h)(tmp)
+    return tmp
+
+def thread(height):
+    h = height
+    thread = threads.metric_thread(diameter = T_d,
+                                   pitch = T_p,
+                                   length = h+0.002,
+                                   internal = True,
+                                   clearance = T_c)
+    chamfer = chamfers.mcad_chamfer_cylinder(diameter = T_d-2*T_p,
+                                             length = T_p+0.25,
+                                             angle = None,
+                                             depth = None,
+                                             internal = True)
+    tmp = chamfers.mcad_chamfered_cylinder(h+0.002, internal = True)(
+        thread, chamfer, chamfer)
+    tmp = sp.translate([0,0,-0.001])(tmp)
+    return tmp
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
