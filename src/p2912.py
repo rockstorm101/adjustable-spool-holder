@@ -39,16 +39,7 @@ def part(variant = '', configuration = '', debug = False):
     tmp = sp.linear_extrude(N_h)(nut)
     flange = sp.cylinder(d=F_d, h=F_t+0.1)
     tmp += sp.translate([0,0,N_h-0.1])(flange)
-    bseat = chamfers.mcad_chamfered_cylinder(B_h+0.001, internal=False)(
-        sp.cylinder(d=B_d, h=B_h+0.001),
-        chamfers.mcad_chamfer_cylinder(diameter = B_d,
-                                       length = None,
-                                       angle = 30,
-                                       depth = 1,
-                                       internal = False)
-    )
-    bseat = sp.translate([0,0,B_h])( sp.rotate([180,0,0])( bseat ) )
-    tmp += sp.translate([0, 0, N_h+F_t-0.001])(bseat)
+    tmp += sp.translate([0, 0, N_h+F_t-0.001])(screw.bseat())
     thread = threads.metric_thread(diameter = T_d,
                                    pitch = T_p,
                                    length = dim14+0.2,

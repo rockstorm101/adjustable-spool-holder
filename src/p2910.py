@@ -35,16 +35,7 @@ NUT_CONN =     [[0, 0, dim14-20.2], [0, 0, -1], 0]
 @spu.bom_part(description = "Screw", code_name = _code_name)
 def part(variant = '', configuration = '', debug = False):
     tmp = sp.cylinder(d=F_d, h=dim10)
-    bseat = chamfers.mcad_chamfered_cylinder(B_h+0.001, internal=False)(
-        sp.cylinder(d=B_d, h=B_h+0.001),
-        chamfers.mcad_chamfer_cylinder(diameter = B_d,
-                                       length = None,
-                                       angle = 30,
-                                       depth = 1,
-                                       internal = False)
-    )
-    bseat = sp.translate([0,0,B_h])( sp.rotate([180,0,0])( bseat ) )
-    tmp += sp.translate([0,0,dim10-0.001])( bseat )
+    tmp += sp.translate([0,0,dim10])( bseat() )
     thread = chamfers.mcad_chamfered_cylinder(dim17, internal = False)(
         threads.metric_thread(diameter = T_d,
                               pitch = T_p,
@@ -71,6 +62,20 @@ def part(variant = '', configuration = '', debug = False):
                                         direction = "ccw")
     tmp -= sp.translate([0,0,dim10/2-PN_s/2])( pn )
     if debug: tmp += assembly.connector(BEARING_CONN)
+    return tmp
+
+def bseat():
+    d = B_d
+    h = B_h+0.001
+    tmp = chamfers.mcad_chamfered_cylinder(h, internal=False)(
+        sp.cylinder(d=d, h=h),
+        chamfers.mcad_chamfer_cylinder(diameter = d,
+                                       length = None,
+                                       angle = 30,
+                                       depth = 1,
+                                       internal = False)
+    )
+    tmp = sp.translate([0,0,h-0.001])( sp.rotate([180,0,0])(tmp) )
     return tmp
 
 if __name__ == '__main__':
