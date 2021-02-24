@@ -56,9 +56,9 @@ def part(variant = '', configuration = '', debug = False):
     )
     tmp += sp.translate([0,0,dim17+B_h+dim10])( sp.rotate([180,0,0])(thread) )
     tmp += sp.rotate([180,0,0])(
-        sp.translate([-107,-113,-0.2])(
+        sp.translate([0,0,-0.2])(
             sp.import_(
-                "../aux/Ender_3_spool_holder/files/" +
+                "../aux/Ender_3_spool_holder/" +
                 "Ender3_Spool_Holder_Coupling.stl") ) )
     pn = curved_text.mcad_cylinder_text(diameter=F_d-PN_d,
                                         t = _code_name+_version+variant,
