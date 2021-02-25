@@ -68,7 +68,7 @@ def thread(height):
                                    length = h+0.002,
                                    internal = True,
                                    clearance = T_c)
-    chamfer = chamfers.mcad_chamfer_cylinder(diameter = T_d-2*T_p,
+    chamfer = chamfers.mcad_chamfer_cylinder(diameter = T_d-2*T_p+T_c,
                                              length = T_p+0.25,
                                              angle = None,
                                              depth = None,
