@@ -33,7 +33,7 @@ _version = ''
 THREAD_CONN = [[0, 0, 0], [0, 0, 1], 30]
 BEARING_CONN = [[0, 0, F_t+N_h], [0, 0, 1], 0]
 
-@spu.bom_part(description = "Nut", code_name = _code_name)
+@spu.bom_part(description = "Nut, Bearing", code_name = _code_name)
 def part(variant = '', configuration = '', debug = False):
     tmp = hexagon()
     flange = sp.cylinder(d=F_d, h=F_t+0.1)
