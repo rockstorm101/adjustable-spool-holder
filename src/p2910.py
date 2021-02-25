@@ -17,7 +17,7 @@ dim10 = 14              # first step height
 B_h = bearing.B + 1.4   # bearing seat height
 F_d = 29.5              # flange OD, which the bearing seats against
 B_d = bearing.ID - 0.2  # bearing seat diam
-dim14 = 110             # full length
+dim14 = 120             # full length
 T_d = 20                # thread nom diam
 T_p = 2.5               # thread pitch
 T_c = 0.7               # thread clearance
@@ -51,7 +51,7 @@ def part(variant = '', configuration = '', debug = False):
             sp.import_(
                 "../aux/Ender_3_spool_holder/" +
                 "Ender3_Spool_Holder_Coupling.stl") ) )
-    pn = curved_text.mcad_cylinder_text(diameter=F_d-PN_d,
+    pn = curved_text.mcad_cylinder_text(diameter=F_d-2*PN_d,
                                         t = _code_name+_version+variant,
                                         depth = PN_d+0.001,
                                         size = PN_s,
