@@ -30,7 +30,7 @@ _code_name = "2912"
 _version = ''
 
 # Connectors
-THREAD_CONN = [[0, 0, 0], [0, 0, 1], 0]
+THREAD_CONN = [[0, 0, 0], [0, 0, 1], 30]
 BEARING_CONN = [[0, 0, F_t+N_h], [0, 0, 1], 0]
 
 @spu.bom_part(description = "Nut", code_name = _code_name)

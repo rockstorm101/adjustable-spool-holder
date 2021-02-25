@@ -17,7 +17,7 @@ _code_name = "2913"
 _version = ''
 
 # Connectors
-THREAD_CONN = [[0, 0, 0], [0, 0, 1], 0]
+THREAD_CONN = [[0, 0, 0], [0, 0, -1], 0]
 
 @spu.bom_part(description = "Nut", code_name = _code_name)
 def part(variant = '', configuration = '', debug = False):

@@ -9,6 +9,7 @@ spu.set_bom_headers("code_name")
 import p2910 as screw
 import p2911 as clamp
 import p2912 as nut
+import p2913 as cnut
 import v2901 as bearing
 import m2901 as spool
 
@@ -21,8 +22,10 @@ def assy(variant = '', configuration = '', debug = False):
     N = sp.color("Plum", 1)( nut.part(debug=debug) )
     S = sp.color("Khaki", 1)(screw.part(debug=debug))
     P = sp.color("White", 0.5)(spool.part(debug=debug))
+    CN = sp.color("Orange", 1)(cnut.part(debug=debug))
 
-    tmp = B + assembly.attach(bearing.RACEI_CONN, nut.BEARING_CONN)(N)
+    tmp = N + assembly.attach(nut.THREAD_CONN, cnut.THREAD_CONN)(CN)
+    tmp = B + assembly.attach(bearing.RACEI_CONN, nut.BEARING_CONN)(tmp)
     tmp = C + assembly.attach(clamp.BEARING_CONN, bearing.RACEO_CONN)(tmp)
     tmp = P + assembly.attach(spool.FWD_CLAMP_CONN, clamp.SPOOL_CONN)(tmp)
     tmp = C + assembly.attach(clamp.SPOOL_CONN, spool.AFT_CLAMP_CONN)(tmp)
