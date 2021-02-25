@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+## 0.2
+
+### Added
+
+- p13: Added counter-nut
+- p10: Thread enlarged by 10 mm
+- p10: Added engraved P/N
+- p10/12: Lead-in chamfers on bearing seats
+
+### Fixed
+
+- p12: Fixed conflicting part description
+- p10: Ender 3 coupling scaled down by 0.2 mm
+- p10: Thread clearance increased to 0.7 mm
+
 ## 0.2-p1
 
 ### Fixed
