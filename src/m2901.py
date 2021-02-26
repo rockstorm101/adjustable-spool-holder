@@ -1,3 +1,12 @@
+# This file is part of the Adjustable Spool Holder.
+#
+# This source file is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# Copyright 2021 Rock Storm <rockstorm at gmx dot com>
+
 # m2901.py -- Mock-Up Spool
 
 # Python imports
