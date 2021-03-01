@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased
+## 1.0
+
+First production release.
+
+### Added
+
+- p11: Added engraved P/N
+- p10: Thread clearance set at a final +/- 0.5 mm
 
 ## 0.2
 

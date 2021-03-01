@@ -8,11 +8,11 @@ cases.
 
 Part Number | Description  | Quantity
    :---     |     :---     |  :---:
-291002      | Screw        |    1
+291010      | Screw        |    1
 6905-ZZ     | Bearing      |    2
-291102      | Clamp        |    2
-291202      | Nut, Bearing |    1
-291302      | Nut          |    1
+291110      | Clamp        |    2
+291210      | Nut, Bearing |    1
+291310      | Nut          |    1
 
 This holder is designed to use bearings of size 42x25x9
 (6905-xx). Same bearings but with different shields/seals
