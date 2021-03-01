@@ -25,8 +25,8 @@ bearing quality would do.
 - Supports: Yes
 - Resolution:
   - <= 0.1 mm on the coupling ramp (start Z: 2.8 mm, finish Z: 3.8 mm)
-  - <= 0.1 mm on the threaded section (start Z: 41.0 mm, finish Z: 106.6 mm)
-  - Any elsewhere (I used 0.2 mm)
+  - <= 0.1 mm on the threaded section (start Z: 41.0 mm, finish Z: 136.6 mm)
+  - Any layer height elsewhere (I used 0.2 mm)
 - Infill: >= 50%
 - Vertical Shells: 3
 
@@ -37,7 +37,14 @@ bearing quality would do.
 - Infill: >= 50%
 - Vertical Shells: 3
 
-### Nut (2912)
+### Nut, Bearing (2912)
+- Rafts: No
+- Supports: No
+- Resolution: <= 0.1 mm
+- Infill: >= 20%
+- Vertical Shells: 3
+
+### Nut (2913)
 - Rafts: No
 - Supports: No
 - Resolution: <= 0.1 mm
